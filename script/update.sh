@@ -12,7 +12,6 @@ update-locale LANG=$LANG LC_ALL=$LC_ALL
 # Disable the release upgrader
 echo "==> Disabling the release upgrader"
 apt-get -y purge ubuntu-release-upgrader-core
-#sed -i.bak 's/^Prompt=.*$/Prompt=never/' /etc/update-manager/release-upgrades
 
 echo "==> Disabling apt.daily.service"
 systemctl stop apt-daily.timer
@@ -28,7 +27,7 @@ if [[ $UPDATE =~ true || $UPDATE =~ 1 || $UPDATE =~ yes ]]; then
     apt-get -y autoremove --purge
 fi
 apt-get -y install build-essential linux-headers-generic
-apt-get -y install ssh nfs-common vim curl perl git
+apt-get -y install ssh nfs-common vim curl git
 apt-get -y autoclean
 apt-get -y clean
 
