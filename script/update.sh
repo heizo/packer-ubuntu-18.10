@@ -1,34 +1,35 @@
 #!/bin/bash -eu
 
+echo "==> Disabling apt.daily.service & apt-daily-upgrade.service"
+systemctl stop apt-daily.timer apt-daily-upgrade.timer
+systemctl mask apt-daily.timer apt-daily-upgrade.timer
+systemctl stop apt-daily.service apt-daily-upgrade.service
+systemctl mask apt-daily.service apt-daily-upgrade.service
+systemctl daemon-reload
+
+# Disable the release upgrader
+echo "==> Disabling the release upgrader"
+sed -i.bak 's/^Prompt=.*$/Prompt=never/' /etc/update-manager/release-upgrades
+
 # Reduce installed languages to just "en_US"
 echo "==> Configuring locales"
-apt-get -y purge language-pack-en language-pack-gnome-en language-selector-common
+apt-get -y purge language-pack-en language-pack-gnome-en
 sed -i -e '/^[^# ]/s/^/# /' /etc/locale.gen
 LANG=en_US.UTF-8
 LC_ALL=$LANG
 locale-gen --purge $LANG
 update-locale LANG=$LANG LC_ALL=$LC_ALL
 
-# Disable the release upgrader
-echo "==> Disabling the release upgrader"
-sed -i.bak 's/^Prompt=.*$/Prompt=never/' /etc/update-manager/release-upgrades
-
-echo "==> Disabling apt.daily.service"
-systemctl stop apt-daily.timer
-systemctl disable apt-daily.timer
-systemctl mask apt-daily.service
-systemctl daemon-reload
-
 # install packages and upgrade
 echo "==> Updating list of repositories"
 apt-get -y update
 if [[ $UPDATE =~ true || $UPDATE =~ 1 || $UPDATE =~ yes ]]; then
+    echo "==> Upgrading packages"
     apt-get -y dist-upgrade
-    apt-get -y autoremove --purge
 fi
 apt-get -y install build-essential linux-headers-generic
-apt-get -y install ssh nfs-common vim curl git
-apt-get -y autoclean
+apt-get -y install ssh nfs-common git curl vim
+apt-get -y autoremove --purge
 apt-get -y clean
 
 # Disable IPv6
