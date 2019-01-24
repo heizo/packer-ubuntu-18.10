@@ -26,16 +26,16 @@ apt-get -y purge popularity-contest installation-report plymouth xdg-user-dirs
 apt-get -y purge nano
 dpkg --list | grep '^rc' | awk '{print $2}' | xargs apt-get -y purge
 
-# Clean up the apt cache
-apt-get -y autoremove --purge
-apt-get -y clean
-
 # Clean up orphaned packages with deborphan
 apt-get -y install deborphan
 while [ -n "$(deborphan --guess-all --libdevel)" ]; do
     deborphan --guess-all --libdevel | xargs apt-get -y purge
 done
 apt-get -y purge deborphan dialog
+
+# Clean up the apt cache
+apt-get -y autoremove --purge
+apt-get -y clean
 
 echo "==> Removing man pages"
 rm -rf /usr/share/man/*
