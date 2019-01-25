@@ -11,15 +11,6 @@ systemctl daemon-reload
 echo "==> Disabling the release upgrader"
 sed -i.bak 's/^Prompt=.*$/Prompt=never/' /etc/update-manager/release-upgrades
 
-# Reduce installed languages to just "en_US"
-echo "==> Configuring locales"
-apt-get -y purge language-pack-en language-pack-gnome-en
-sed -i -e '/^[^# ]/s/^/# /' /etc/locale.gen
-LANG=en_US.UTF-8
-LC_ALL=$LANG
-locale-gen --purge $LANG
-update-locale LANG=$LANG LC_ALL=$LC_ALL
-
 # install packages and upgrade
 echo "==> Updating list of repositories"
 apt-get -y update

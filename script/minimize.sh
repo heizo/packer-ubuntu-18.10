@@ -1,10 +1,13 @@
 #!/bin/bash -eu
 
-echo "==> Disk usage before minimization"
-df -h
-
-echo "==> Installed packages before cleanup"
-dpkg --get-selections | grep -v deinstall
+# Reduce installed languages to just "en_US"
+echo "==> Configuring locales"
+apt-get -y purge language-pack-en language-pack-gnome-en
+sed -i -e '/^[^# ]/s/^/# /' /etc/locale.gen
+LANG=en_US.UTF-8
+LC_ALL=$LANG
+locale-gen --purge $LANG
+update-locale LANG=$LANG LC_ALL=$LC_ALL
 
 # Remove some packages to get a minimal install
 echo "==> Removing all linux kernels except the currrent one"
@@ -45,6 +48,3 @@ echo "==> Removing any docs"
 rm -rf /usr/share/doc/*
 echo "==> Removing caches"
 find /var/cache -type f -exec rm -rf {} \;
-
-echo "==> Disk usage after cleanup"
-df -h
