@@ -50,7 +50,7 @@ rm -f /EMPTY
 sync
 
 echo "==> Disk usage before cleanup"
-echo ${DISK_USAGE_BEFORE_CLEANUP}
+echo "$DISK_USAGE_BEFORE_CLEANUP"
 
 echo "==> Disk usage after cleanup"
 df -h
