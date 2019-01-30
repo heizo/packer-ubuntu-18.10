@@ -45,7 +45,7 @@ if [ "x${swapuuid}" != "x" ]; then
 fi
 
 # Zero out the free space to save space in the final image
-dd if=/dev/zero of=/EMPTY bs=1M  || echo "dd exit code $? is suppressed"
+dd if=/dev/zero of=/EMPTY bs=1M || echo "dd exit code $? is suppressed"
 rm -f /EMPTY
 sync
 
