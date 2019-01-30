@@ -9,7 +9,7 @@ systemctl daemon-reload
 
 # Disable the release upgrader
 echo "==> Disabling the release upgrader"
-sed -i.bak 's/^Prompt=.*$/Prompt=never/' /etc/update-manager/release-upgrades
+sed -i 's/^Prompt=.*$/Prompt=never/' /etc/update-manager/release-upgrades
 
 # install packages and upgrade
 echo "==> Updating list of repositories"
@@ -26,7 +26,7 @@ apt-get -y clean
 # Disable IPv6
 if [[ $DISABLE_IPV6 =~ true || $DISABLE_IPV6 =~ 1 || $DISABLE_IPV6 =~ yes ]]; then
     echo "==> Disabling IPv6"
-    sed -i -e 's/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="ipv6.disable=1"/' \
+    sed -i 's/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="ipv6.disable=1"/' \
         /etc/default/grub
 fi
 
