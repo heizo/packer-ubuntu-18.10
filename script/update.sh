@@ -7,10 +7,6 @@ systemctl stop apt-daily.service apt-daily-upgrade.service
 systemctl mask apt-daily.service apt-daily-upgrade.service
 systemctl daemon-reload
 
-# Disable the release upgrader
-echo "==> Disabling the release upgrader"
-sed -i 's/^Prompt=.*$/Prompt=never/' /etc/update-manager/release-upgrades
-
 # install packages and upgrade
 echo "==> Updating list of repositories"
 apt-get -y update
@@ -22,6 +18,10 @@ apt-get -y install build-essential linux-headers-generic
 apt-get -y install ssh nfs-common git curl vim
 apt-get -y autoremove --purge
 apt-get -y clean
+
+# Disable the release upgrader
+echo "==> Disabling the release upgrader"
+sed -i 's/^Prompt=.*$/Prompt=never/' /etc/update-manager/release-upgrades
 
 # Disable IPv6
 if [[ $DISABLE_IPV6 =~ true || $DISABLE_IPV6 =~ 1 || $DISABLE_IPV6 =~ yes ]]; then
