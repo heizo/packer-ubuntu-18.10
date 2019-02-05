@@ -30,8 +30,8 @@ if [[ $DISABLE_IPV6 =~ true || $DISABLE_IPV6 =~ 1 || $DISABLE_IPV6 =~ yes ]]; th
         /etc/default/grub
 fi
 
-# Remove 5s grub timeout to speed up booting
-sed -i -e 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' \
+# Remove grub menu and splash screen
+sed -i -e '/^GRUB_TIMEOUT=/aGRUB_RECORDFAIL_TIMEOUT=0' \
     -e 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet nosplash"/' \
     /etc/default/grub
 update-grub
