@@ -20,8 +20,8 @@ apt-get -y autoremove --purge
 apt-get -y clean
 
 # Disable the release upgrader
-echo "==> Disabling the release upgrader"
-sed -i 's/^Prompt=.*$/Prompt=never/' /etc/update-manager/release-upgrades
+#echo "==> Disabling the release upgrader"
+#sed -i 's/^Prompt=.*$/Prompt=never/' /etc/update-manager/release-upgrades
 
 # Disable IPv6
 if [[ $DISABLE_IPV6 =~ true || $DISABLE_IPV6 =~ 1 || $DISABLE_IPV6 =~ yes ]]; then

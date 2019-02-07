@@ -19,8 +19,12 @@ dpkg --list | awk '{print $2}' | grep -- '-doc$' | xargs apt-get -y purge
 echo "==> Removing X11 libraries"
 apt-get -y purge libx11-data xauth libxmuu1 libxcb1 libx11-6 libxext6 libxau6 libxdmcp6
 echo "==> Removing other oddities"
-apt-get -y purge popularity-contest installation-report plymouth xdg-user-dirs
-apt-get -y purge nano
+apt-get -y purge popularity-contest installation-report plymouth
+apt-get -y purge accountsservice bind9-host command-not-found command-not-found-data \
+    dosfstools friendly-recovery geoip-database hdparm info install-info iso-codes \
+    language-selector-common laptop-detect lshw mlocate mtr-tiny nano ntfs-3g parted pciutils \
+    publicsuffix shared-mime-info tasksel tcpdump ubuntu-release-upgrader-core ufw usbutils xdg-user-dirs
+apt-get -y autoremove --purge
 
 # Clean up orphaned packages with deborphan
 apt-get -y install deborphan
