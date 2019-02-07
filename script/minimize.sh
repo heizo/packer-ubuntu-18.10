@@ -21,10 +21,10 @@ apt-get -y purge libx11-data xauth libxmuu1 libxcb1 libx11-6 libxext6 libxau6 li
 echo "==> Removing other oddities"
 apt-get -y purge popularity-contest installation-report plymouth xdg-user-dirs
 apt-get -y purge nano
-dpkg --list | grep '^rc' | awk '{print $2}' | xargs apt-get -y purge
 
 # Clean up orphaned packages with deborphan
 apt-get -y install deborphan
+deborphan --find-config | xargs apt-get -y purge
 while [ -n "$(deborphan --guess-all)" ]; do
     deborphan --guess-all | xargs apt-get -y purge
 done
