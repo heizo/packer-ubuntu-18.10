@@ -64,7 +64,7 @@
             "https_proxy={{user `https_proxy`}}",
             "no_proxy={{user `no_proxy`}}"
         ],
-        "execute_command": "echo '{{user `ssh_password`}}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+        "execute_command": "echo '{{user `ssh_password`}}'|{{.Vars}} sudo -E -S bash '{{.Path}}'",
         "expect_disconnect": true,
         "scripts": [
             "script/update.sh",
