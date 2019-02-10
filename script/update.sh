@@ -16,12 +16,14 @@ if [[ $UPDATE =~ true || $UPDATE =~ 1 || $UPDATE =~ yes ]]; then
 fi
 apt-get -y install build-essential linux-headers-generic
 apt-get -y install ssh nfs-common git curl vim
+
+echo "==> Removing the release upgrader"
+apt-get -y purge ubuntu-release-upgrader-core
+if [ -d /var/lib/update-manager ]; then
+    rm -rf /var/lib/update-manager
+fi
 apt-get -y autoremove --purge
 apt-get -y clean
-
-# Disable the release upgrader
-#echo "==> Disabling the release upgrader"
-#sed -i 's/^Prompt=.*$/Prompt=never/' /etc/update-manager/release-upgrades
 
 # Disable IPv6
 if [[ $DISABLE_IPV6 =~ true || $DISABLE_IPV6 =~ 1 || $DISABLE_IPV6 =~ yes ]]; then

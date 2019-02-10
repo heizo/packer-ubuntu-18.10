@@ -23,7 +23,7 @@ apt-get -y purge accountsservice bind9-host command-not-found command-not-found-
     dosfstools friendly-recovery geoip-database hdparm info install-info installation-report \
     iso-codes language-selector-common laptop-detect lshw mlocate mtr-tiny nano ntfs-3g os-prober \
     parted pciutils plymouth popularity-contest publicsuffix shared-mime-info tasksel tcpdump \
-    ubuntu-release-upgrader-core ufw usbutils xdg-user-dirs
+    ufw usbutils xdg-user-dirs
 apt-get -y autoremove --purge
 
 # Clean up orphaned packages with deborphan
@@ -37,13 +37,6 @@ apt-get -y purge deborphan dialog
 # Clean up the apt cache
 apt-get -y autoremove --purge
 apt-get -y clean
-
-# Remove release-upgrade-available file
-if ! apt -qq list ubuntu-release-upgrader-core 2>/dev/null | grep -q 'installed'; then
-    if [ -d /var/lib/ubuntu-release-upgrader ]; then
-        rm -rf /var/lib/ubuntu-release-upgrader
-    fi
-fi
 
 echo "==> Removing APT files"
 find /var/lib/apt -type f -exec rm -rf {} \;
