@@ -12,20 +12,13 @@ apt-get -y clean
 echo "==> Installed packages"
 dpkg --get-selections | grep -v deinstall
 
-DISK_USAGE_BEFORE_CLEANUP=$(df -h)
-
 # Remove Bash history
 unset HISTFILE
 rm -f /root/.bash_history
 rm -f /home/${SSH_USER}/.bash_history
 
-# Clean up log files
-find /var/log -type f | while read f; do echo -ne '' > "${f}"; done;
-
-echo "==> Clearing last login information"
->/var/log/lastlog
->/var/log/wtmp
->/var/log/btmp
+echo "==> Clearing log files"
+find /var/log -type f -exec truncate --size=0 {} \;
 
 echo '==> Clear out swap and disable until reboot'
 set +e
@@ -48,9 +41,6 @@ fi
 dd if=/dev/zero of=/EMPTY bs=1M || echo "dd exit code $? is suppressed"
 rm -f /EMPTY
 sync
-
-echo "==> Disk usage before cleanup"
-echo "$DISK_USAGE_BEFORE_CLEANUP"
 
 echo "==> Disk usage after cleanup"
 df -h
