@@ -19,9 +19,10 @@ apt-get -y install --no-install-recommends ssh nfs-common git curl vim
 
 echo "==> Removing the release upgrader"
 apt-get -y purge ubuntu-release-upgrader-core
-if [ -d /var/lib/update-manager ]; then
-    rm -rf /var/lib/update-manager
-fi
+rm -rf /var/lib/ubuntu-release-upgrader
+rm -rf /var/lib/update-manager
+
+# Clean up the apt cache
 apt-get -y autoremove --purge
 apt-get -y clean
 
