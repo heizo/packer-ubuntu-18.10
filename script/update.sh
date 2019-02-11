@@ -14,8 +14,8 @@ if [[ $UPDATE =~ true || $UPDATE =~ 1 || $UPDATE =~ yes ]]; then
     echo "==> Upgrading packages"
     apt-get -y dist-upgrade
 fi
-apt-get -y install build-essential linux-headers-generic
-apt-get -y install ssh nfs-common git curl vim
+apt-get -y install --no-install-recommends build-essential linux-headers-generic
+apt-get -y install --no-install-recommends ssh nfs-common git curl vim
 
 echo "==> Removing the release upgrader"
 apt-get -y purge ubuntu-release-upgrader-core
